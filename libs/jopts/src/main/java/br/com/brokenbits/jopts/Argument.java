@@ -18,9 +18,9 @@ import java.lang.annotation.Target;
 public @interface Argument {
 	
 	/**
-	 * Name of the parameter, such as "-argument" or null to define the default one.
+	 * Name of the parameter, such as "-argument" or "" to set is as unnamed parameter.
 	 */
-	String name();
+	String name() default "";
 
 	/**
 	 * Sets a unique key. This value must be set only if the parameter is supposed to appear only once
