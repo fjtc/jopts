@@ -5,10 +5,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * This class implements the parameter definition.
+ * This class implements the parameter definition read from an annotated class.
  * 
  * @author fchino
- *
  */
 class ArgumentDefinition implements Cloneable {
 

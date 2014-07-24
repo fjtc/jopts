@@ -1,5 +1,10 @@
 package br.com.brokenbits.jopts;
 
+/**
+ * 
+ * 
+ * @author FJTC
+ */
 public class InvalidParameterTypeException extends ArgumentParserException {
 
 	/**
@@ -9,30 +14,24 @@ public class InvalidParameterTypeException extends ArgumentParserException {
 
 	public InvalidParameterTypeException(String name) {
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 
 	public InvalidParameterTypeException(String name, String message) {
 		super(name, message);
-		// TODO Auto-generated constructor stub
 	}
 
 	public InvalidParameterTypeException(String name, Throwable cause) {
 		super(name, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public InvalidParameterTypeException(String name, String message,
 			Throwable cause) {
 		super(name, message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public InvalidParameterTypeException(String name, String message,
 			Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(name, message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
-
 }

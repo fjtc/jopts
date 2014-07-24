@@ -1,5 +1,10 @@
 package br.com.brokenbits.jopts;
 
+/**
+ * This exception is used to indicate when the parameter definition is incorrect. 
+ * 
+ * @author FJTC
+ */
 public class InvalidArgumentDefinitionException extends ArgumentParserException {
 
 	/**

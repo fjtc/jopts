@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is used to define an argument definition.
+ * This annotation is used to indicate that a method is an argument handler method. 
  * 
  * @author fjtc
  * @since 2014.07.22
@@ -18,23 +18,27 @@ import java.lang.annotation.Target;
 public @interface Argument {
 	
 	/**
-	 * Name of the parameter, such as "-argument" or "" to set is as unnamed parameter.
+	 * Name of the parameter as it will appear in the command line (e.g.: "-version"). The default value
+	 * indicates that it is the unnamed parameter.
 	 */
 	String name() default "";
 
 	/**
-	 * Sets a unique key. This value must be set only if the parameter is supposed to appear only once
-	 * per command line. All arguments with the same unique key will be mutually exclusive.
+	 * Sets a unique key used to make sure that this parameter cannot be more than once in a given
+	 * command line. If two or more parameters share the same uniqueKey, only one of them will be
+	 * allowed in a given command line.
 	 */
 	String uniqueKey() default "";
 	
 	/**
-	 * The literal description of this argument. 
+	 * The literal description of this argument. It is used when the resourceName does not point
+	 * to a valid string.
 	 */
 	String description() default "";
 	
 	/**
-	 * The name of the resource of the description of this argument. 
+	 * The name of the resource of the description of this argument. This allows the use of the
+	 * Java internationalization features. 
 	 */
 	String resourceName() default "";
 }

@@ -1,32 +1,22 @@
 package br.com.brokenbits.jopts;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
-public class ArgumentParserContext {
+class ArgumentParserContext {
 	
-	private HashSet<String> used = new HashSet<String>();
+	private HashMap<String, String> used = new HashMap<String, String>();
 
-	public void validateUsage(ArgumentDefinition def) throws ArgumentParserException {
+	public void validateUnique(ArgumentDefinition def) throws DuplicatedArgumentException {
 		String name;
 		
 		// Get the parameter name
-		name = def.getName();
-		// If
 		if (def.isUnique()) {
-			if (used.contains(name)) {
-				throw new DuplicatedArgumentException(def.getName());
+			name = used.get(def.getUniqueKey());
+			if (name != null) {
+				throw new DuplicatedArgumentException(name, def.getName());
 			}
 		}
-		
 		// Register the use
-		used.add(name);
-	}
-	
-	public boolean isUsed(ArgumentDefinition def) {
-		return isUsed(def.getName());
-	}
-	
-	public boolean isUsed(String name) {
-		return used.contains(name);
+		used.put(def.getUniqueKey(), def.getName());
 	}
 }

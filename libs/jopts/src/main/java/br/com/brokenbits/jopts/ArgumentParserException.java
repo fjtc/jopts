@@ -1,5 +1,10 @@
 package br.com.brokenbits.jopts;
 
+/**
+ * This is the base class for all JOPTS exceptions.
+ * 
+ * @author fjtc
+ */
 public class ArgumentParserException extends Exception {
 	
 	/**
@@ -34,6 +39,11 @@ public class ArgumentParserException extends Exception {
 		this.name = name;
 	}
 	
+	/**
+	 * Returns the name of the affected parameter.
+	 *  
+	 * @return The name of the parameter or null if it is not available.
+	 */
 	public String getName() {
 		return name;
 	}

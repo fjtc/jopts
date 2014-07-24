@@ -41,11 +41,12 @@ public class ArgumentParser<T> {
 	}
 	
 	
-	public void process(String args[], T instance) throws IllegalArgumentException {
+	public void process(String args[], T instance) throws IllegalArgumentException, ArgumentParserException {
 		int i;
 		String arg;
 		String val;
 		ArgumentDefinition def;
+		ArgumentParserContext context = new ArgumentParserContext();
 		
 		i = 0;
 		while (i < args.length) {
@@ -55,8 +56,18 @@ public class ArgumentParser<T> {
 			// Look for the parameter
 			def = argDefs.get(arg);
 			if (def != null) {
-				
-			
+				if (def.hasParameter()) {
+					if (i >= args.length) {
+						// Missing argument
+					} else {
+						val = args[i];
+						i++;
+					}
+				} else {
+					val = null;
+				}
+				// Validate duplicates
+				context.validateUnique(def);	
 			
 			} else {
 				// Default value
@@ -65,11 +76,4 @@ public class ArgumentParser<T> {
 			}
 		}
 	}
-	
-	
-	private void invokeDefault(ArgumentDefinition def){
-		
-	}
-	
-	
 }
