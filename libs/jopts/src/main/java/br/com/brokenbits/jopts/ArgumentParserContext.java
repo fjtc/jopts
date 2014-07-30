@@ -3,7 +3,8 @@ package br.com.brokenbits.jopts;
 import java.util.HashMap;
 
 /**
- * This class is used to store the parser context 
+ * This class is used to store the argument parser context. 
+ * 
  * @author FJTC
  */
 class ArgumentParserContext {
@@ -19,7 +20,7 @@ class ArgumentParserContext {
 	ArgumentParserContext(String args[], int current, int count) {
 		this.args = args;
 		this.current = current;
-		this.last = current + last;
+		this.last = current + count;
 	}
 	
 	public boolean hasNext(){
