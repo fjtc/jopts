@@ -1,5 +1,9 @@
 package br.com.brokenbits.jopts;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * This class is used to store help information about the arguments.
  * 
@@ -7,13 +11,25 @@ package br.com.brokenbits.jopts;
  */
 public class ArgumentHelp implements Comparable<ArgumentHelp>{
 	
+	/**
+	 * The name of the argument.
+	 */
 	private String name;
 	
+	/**
+	 * The description of the argument.
+	 */
 	private String description;
 	
+	/**
+	 * The type of parameter of the argument.
+	 */
 	private Class<?> type;
 	
-	private String[] conflicts;
+	/**
+	 * List of conflicts of this argument.
+	 */
+	private Set<String> conflicts;
 
 	/**
 	 * Returns the name of the argument. It may be null if this describes the unnamed argument.
@@ -75,13 +91,19 @@ public class ArgumentHelp implements Comparable<ArgumentHelp>{
 	 * argument itself.
 	 * 
 	 * @return The list of conflicts or null if this argument has no conflicts.
+	 * @note Do not modify the contents of this set.
 	 */
-	public String[] getConflicts() {
+	public Set<String> getConflicts() {
 		return conflicts;
 	}
 
-	public void setConflicts(String[] conflicts) {
-		this.conflicts = conflicts;
+	/**
+	 * Sets the list of conflicts.
+	 * 
+	 * @param conflicts List of conflicting options.
+	 */
+	public void setConflicts(Collection<String> conflicts) {
+		this.conflicts = new HashSet<String>(conflicts);
 	}
 
 	/**

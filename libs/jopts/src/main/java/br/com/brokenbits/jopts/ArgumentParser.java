@@ -189,7 +189,7 @@ public class ArgumentParser<T> {
 			if (d.isUnique()) {
 				List<String> c = this.conflictList.get(d.getUniqueKey());
 				if (c != null) {
-					h.setConflicts(c.toArray(new String[0]));
+					h.setConflicts(c);
 				}			
 			}
 		}
