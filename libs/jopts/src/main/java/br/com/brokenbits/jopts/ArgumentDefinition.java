@@ -41,6 +41,7 @@ class ArgumentDefinition implements Cloneable {
 	private boolean isValidType(Class<?> type) {
 		
 		return 
+				(type == null) ||
 				type.equals(Long.class) || type.equals(Long.TYPE) ||
 				type.equals(Double.class) || type.equals(Double.TYPE) ||
 				type.equals(String.class);

@@ -37,40 +37,49 @@ public class ArgumentParser<T> {
 		
 		// List methods
 		for (Method m: type.getMethods()){
-			processMethod(m);
+			Argument a = m.getAnnotation(Argument.class);
+			if (a != null) {
+				processMethod(m, a);
+			} else {
+				Arguments args = m.getAnnotation(Arguments.class);
+				if (args != null) {
+					if (args.arguments() == null) {
+						throw new InvalidArgumentDefinitionException("The annotation arguments must contain at least one  argument.");
+					} else {
+						for (Argument arg: args.arguments()) {
+							processMethod(m, arg);			
+						}
+					}
+				}
+			}
 		}
 	}
 	
-	private void processMethod(Method m) throws InvalidArgumentDefinitionException {
-		
-		for (Annotation a: m.getAnnotations()) {
-			if (a instanceof Argument) {
-				try {
-					ArgumentDefinition def = new ArgumentDefinition(m, (Argument)a);
-					
-					// Test for the unnamed first
-					if (argDefs.containsKey(def.getName())) {
-						throw new IllegalStateException("Duplicated argument definition.");
-					} else {
-						argDefs.put(def.getName(), def);
-					}
-					
-					// Keep a list of the conflicting arguments
-					if (def.isUnique()) {
-						List<String> conflicts = conflictList.get(def.getUniqueKey());
-						if (conflicts == null) {
-							conflicts = new ArrayList<String>();
-							conflictList.put(def.getUniqueKey(), conflicts);
-						}
-						conflicts.add(def.getName());
-					}					
-				} catch (Exception e) {
-					throw new InvalidArgumentDefinitionException(((Argument) a).name(), 
-							String.format("Invalid argument definition found in the declaration of %1$s.%2$s().",
-									m.getDeclaringClass().getName(),
-									m.getName()));
-				}
+	private void processMethod(Method m, Argument a) throws InvalidArgumentDefinitionException {
+		try {
+			ArgumentDefinition def = new ArgumentDefinition(m, (Argument)a);
+			
+			// Test for the unnamed first
+			if (argDefs.containsKey(def.getName())) {
+				throw new IllegalStateException("Duplicated argument definition.");
+			} else {
+				argDefs.put(def.getName(), def);
 			}
+			
+			// Keep a list of the conflicting arguments
+			if (def.isUnique()) {
+				List<String> conflicts = conflictList.get(def.getUniqueKey());
+				if (conflicts == null) {
+					conflicts = new ArrayList<String>();
+					conflictList.put(def.getUniqueKey(), conflicts);
+				}
+				conflicts.add(def.getName());
+			}					
+		} catch (Exception e) {
+			throw new InvalidArgumentDefinitionException(((Argument) a).name(), 
+					String.format("Invalid argument definition found in the declaration of %1$s.%2$s().",
+							m.getDeclaringClass().getName(),
+							m.getName()), e);
 		}
 	}
 	
