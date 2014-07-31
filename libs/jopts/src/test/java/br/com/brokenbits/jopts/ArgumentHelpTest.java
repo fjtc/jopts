@@ -35,8 +35,8 @@ public class ArgumentHelpTest {
 		
 		a = new ArgumentHelp();
 		assertNull(a.getType());
-		a.setType(String.class);
-		assertEquals(String.class, a.getType());
+		a.setType(ArgumentParameterType.STRING);
+		assertEquals(ArgumentParameterType.STRING, a.getType());
 	}
 
 	@Test

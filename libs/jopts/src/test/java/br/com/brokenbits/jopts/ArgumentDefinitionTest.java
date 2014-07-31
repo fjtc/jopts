@@ -123,7 +123,7 @@ public class ArgumentDefinitionTest {
 		assertNull(d.getUniqueKey());
 		assertFalse(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertNull(d.getType());
+		assertEquals(ArgumentParameterType.NONE, d.getType());
 		assertEquals(m, d.getMethod());
 		assertFalse(d.hasParameter());
 		
@@ -150,7 +150,7 @@ public class ArgumentDefinitionTest {
 		assertEquals("key", d.getUniqueKey());
 		assertTrue(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertEquals(String.class, d.getType());
+		assertEquals(ArgumentParameterType.STRING, d.getType());
 		assertEquals(m, d.getMethod());
 		assertTrue(d.hasParameter());
 		
@@ -177,7 +177,7 @@ public class ArgumentDefinitionTest {
 		assertEquals("key", d.getUniqueKey());
 		assertTrue(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertEquals(Long.TYPE, d.getType());
+		assertEquals(ArgumentParameterType.LONG, d.getType());
 		assertEquals(m, d.getMethod());
 		assertTrue(d.hasParameter());
 		
@@ -204,7 +204,7 @@ public class ArgumentDefinitionTest {
 		assertEquals("key", d.getUniqueKey());
 		assertTrue(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertEquals(Long.class, d.getType());
+		assertEquals(ArgumentParameterType.LONG, d.getType());
 		assertEquals(m, d.getMethod());
 		assertTrue(d.hasParameter());
 		
@@ -231,7 +231,7 @@ public class ArgumentDefinitionTest {
 		assertEquals("key", d.getUniqueKey());
 		assertTrue(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertEquals(Double.TYPE, d.getType());
+		assertEquals(ArgumentParameterType.DOUBLE, d.getType());
 		assertEquals(m, d.getMethod());
 		assertTrue(d.hasParameter());
 		
@@ -258,7 +258,7 @@ public class ArgumentDefinitionTest {
 		assertEquals("key", d.getUniqueKey());
 		assertTrue(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertEquals(Double.class, d.getType());
+		assertEquals(ArgumentParameterType.DOUBLE, d.getType());
 		assertEquals(m, d.getMethod());
 		assertTrue(d.hasParameter());
 		
@@ -285,7 +285,7 @@ public class ArgumentDefinitionTest {
 		assertEquals("key", d.getUniqueKey());
 		assertTrue(d.isUnique());
 		assertTrue(d.isUnnamed());		
-		assertEquals(String.class, d.getType());
+		assertEquals(ArgumentParameterType.STRING, d.getType());
 		assertEquals(m, d.getMethod());
 		assertTrue(d.hasParameter());
 		
@@ -311,7 +311,7 @@ public class ArgumentDefinitionTest {
 		assertNull(d.getUniqueKey());
 		assertFalse(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertNull(d.getType());
+		assertEquals(ArgumentParameterType.NONE, d.getType());
 		assertEquals(m, d.getMethod());
 		assertFalse(d.hasParameter());
 	}
@@ -332,7 +332,7 @@ public class ArgumentDefinitionTest {
 		assertNull(d.getUniqueKey());
 		assertFalse(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertNull(d.getType());
+		assertEquals(ArgumentParameterType.NONE, d.getType());
 		assertEquals(m, d.getMethod());
 		assertFalse(d.hasParameter());
 	}
@@ -353,7 +353,7 @@ public class ArgumentDefinitionTest {
 		assertNull(d.getUniqueKey());
 		assertFalse(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertNull(d.getType());
+		assertEquals(ArgumentParameterType.NONE, d.getType());
 		assertEquals(m, d.getMethod());
 		assertFalse(d.hasParameter());
 	}	
@@ -374,7 +374,7 @@ public class ArgumentDefinitionTest {
 		assertEquals("key", d.getUniqueKey());
 		assertTrue(d.isUnique());
 		assertFalse(d.isUnnamed());		
-		assertNull(d.getType());
+		assertEquals(ArgumentParameterType.NONE, d.getType());
 		assertEquals(m, d.getMethod());
 		assertFalse(d.hasParameter());
 	}		

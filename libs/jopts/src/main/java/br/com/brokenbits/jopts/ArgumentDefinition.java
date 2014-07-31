@@ -17,7 +17,7 @@ class ArgumentDefinition implements Cloneable {
 	
 	private String resourceName;
 	
-	private Class<?> type;
+	private ArgumentParameterType type = ArgumentParameterType.NONE;
 	
 	private Method method;
 	
@@ -38,15 +38,6 @@ class ArgumentDefinition implements Cloneable {
 		setMethod(m);
 	}
 	
-	private boolean isValidType(Class<?> type) {
-		
-		return 
-				(type == null) ||
-				type.equals(Long.class) || type.equals(Long.TYPE) ||
-				type.equals(Double.class) || type.equals(Double.TYPE) ||
-				type.equals(String.class);
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -55,12 +46,12 @@ class ArgumentDefinition implements Cloneable {
 		return description;
 	}
 	
-	public Class<?> getType() {
+	public ArgumentParameterType getType() {
 		return type;
 	}
 	
 	public boolean hasParameter(){
-		return (type != null);
+		return (type != ArgumentParameterType.NONE);
 	}
 	
 	public Method getMethod() {
@@ -111,9 +102,8 @@ class ArgumentDefinition implements Cloneable {
 	
 	private void setType(Class<?> type) {
 
-		if (isValidType(type)) {
-			this.type = type;
-		} else {
+		this.type = ArgumentParameterType.forClass(type);
+		if (this.type == null) {
 			throw new IllegalArgumentException("The target method parameter type is not supported.");
 		}
 	}
@@ -184,14 +174,8 @@ class ArgumentDefinition implements Cloneable {
 					
 					// Validate the parameter type
 					try {
-						if (type.equals(Long.class) || type.equals(Long.TYPE)) {
-							param = new Long(paramValue);
-						} else if (type.equals(Double.class) || type.equals(Double.TYPE)) {
-							param = new Double(paramValue);
-						} else {
-							param = paramValue;
-						}
-					} catch (NumberFormatException e) {
+						param = this.getType().parse(paramValue);
+					} catch (IllegalArgumentException e) {
 						throw new InvalidParameterTypeException(this.name, "Invalid value type.");
 					}
 					

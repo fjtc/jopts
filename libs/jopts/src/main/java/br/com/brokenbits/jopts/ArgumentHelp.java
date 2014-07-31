@@ -24,7 +24,7 @@ public class ArgumentHelp implements Comparable<ArgumentHelp>{
 	/**
 	 * The type of parameter of the argument.
 	 */
-	private Class<?> type;
+	private ArgumentParameterType type;
 	
 	/**
 	 * List of conflicts of this argument.
@@ -72,7 +72,7 @@ public class ArgumentHelp implements Comparable<ArgumentHelp>{
 	 * 
 	 * @return The type of the parameter of the argument.
 	 */
-	public Class<?> getType() {
+	public ArgumentParameterType getType() {
 		return type;
 	}
 
@@ -81,7 +81,7 @@ public class ArgumentHelp implements Comparable<ArgumentHelp>{
 	 * 
 	 * @param type The new type.
 	 */
-	public void setType(Class<?> type) {
+	public void setType(ArgumentParameterType type) {
 		this.type = type;
 	}
 
