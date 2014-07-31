@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 class ArgumentParserContext {
 	
-	private HashMap<String, String> used = new HashMap<String, String>();
+	private HashMap<String, ArgumentDefinition> used = new HashMap<String, ArgumentDefinition>();
 	
 	private String args[];
 	
@@ -41,16 +41,16 @@ class ArgumentParserContext {
 	
 	
 	public void validateUnique(ArgumentDefinition def) throws DuplicatedArgumentException {
-		String name;
+		ArgumentDefinition dup;
 		
 		// Get the parameter name
 		if (def.isUnique()) {
-			name = used.get(def.getUniqueKey());
-			if (name != null) {
-				throw new DuplicatedArgumentException(name, def.getName());
+			dup = used.get(def.getUniqueKey());
+			if (dup != null) {
+				throw new DuplicatedArgumentException(def.getName(), dup.getName());
 			}
 		}
 		// Register the use
-		used.put(def.getUniqueKey(), def.getName());
+		used.put(def.getUniqueKey(), def);
 	}
 }
