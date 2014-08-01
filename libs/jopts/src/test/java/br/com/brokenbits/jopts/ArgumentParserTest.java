@@ -171,7 +171,7 @@ public class ArgumentParserTest {
 		public void setCommand2(Double d){
 		}
 		
-		@Argument(name="zero", description="zero description.", resourceName="zero")
+		@Argument(name="zero", description="zero description.")
 		public void setZero(){
 		}			
 	}
@@ -447,7 +447,7 @@ public class ArgumentParserTest {
 		h = l.get(5);
 		assertEquals("zero", h.getName());
 		assertEquals(ArgumentParameterType.NONE, h.getType());
-		assertEquals("zero resource", h.getDescription());
+		assertEquals("zero description.", h.getDescription());
 		assertNull(h.getConflicts());
 	}	
 }

@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 /**
  * This class implements the argument parser.
@@ -41,6 +42,11 @@ import java.util.ResourceBundle;
  * @param <T> The type of the POJO annotated with the argument definitions.
  */
 public class ArgumentParser<T> {
+	
+	/**
+	 * Logger for tracing operations.
+	 */
+	private static final Logger logger = Logger.getLogger(ArgumentParser.class.getName());
 	
 	/**
 	 * List of argument definitions.
@@ -229,15 +235,16 @@ public class ArgumentParser<T> {
 	}
 	
 	private String getResourceString(ResourceBundle res, ArgumentDefinition d){
+		String s;
 		
-		if (res == null) {
-			return d.getDescription();
-		} else {
+		s = d.getDescription();
+		if ((res != null) && (d.getResourceName() != null)) {
 			try {
-				return res.getString(d.getResourceName());
+				s = res.getString(d.getResourceName());
 			} catch (MissingResourceException e) {
-				return d.getDescription();
+				s = d.getDescription();
 			}
 		}
+		return s;
 	}
 }
