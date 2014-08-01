@@ -188,7 +188,9 @@ public class ArgumentParser<T> {
 	}
 	
 	/**
-	 * Generates a list of argument help information.
+	 * Generates a list of argument help information. The list is sorted using the case sensitive
+	 * lexicographic order. If the unnamed argument is present, it will always be the first entry
+	 * in the list.  
 	 * 
 	 * @param res The resource to be used. Can be null if no resource is available.
 	 * @return The list of arguments sorted by name.
