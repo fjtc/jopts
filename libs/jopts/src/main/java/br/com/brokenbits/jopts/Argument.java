@@ -19,7 +19,8 @@ public @interface Argument {
 	
 	/**
 	 * Name of the parameter as it will appear in the command line (e.g.: "-version"). The default value
-	 * indicates that it is the unnamed parameter.
+	 * indicates that it is the unnamed parameter. Notice that '--' is reserved and cannot be used as a
+	 * parameter name.
 	 */
 	String name() default "";
 

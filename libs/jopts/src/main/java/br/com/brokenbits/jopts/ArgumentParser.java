@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 /**
  * This class implements the argument parser.
@@ -42,11 +41,6 @@ import java.util.logging.Logger;
  * @param <T> The type of the POJO annotated with the argument definitions.
  */
 public class ArgumentParser<T> {
-	
-	/**
-	 * Logger for tracing operations.
-	 */
-	private static final Logger logger = Logger.getLogger(ArgumentParser.class.getName());
 	
 	/**
 	 * List of argument definitions.
@@ -89,6 +83,10 @@ public class ArgumentParser<T> {
 	private void processMethod(Method m, Argument a) throws InvalidArgumentDefinitionException {
 		try {
 			ArgumentDefinition def = new ArgumentDefinition(m, (Argument)a);
+			
+			if (a.name().equals("--")) {
+				new IllegalArgumentException("-- is a reserved argument name.");
+			}
 			
 			// Test for the unnamed first
 			if (argDefs.containsKey(def.getName())) {
@@ -141,37 +139,58 @@ public class ArgumentParser<T> {
 		String val;
 		ArgumentDefinition def;
 		ArgumentParserContext context = new ArgumentParserContext(args, offs, count);
+		boolean allUnnamed = false;
 		
 		while (context.hasNext()) {
 			// Fetch the first part
 			arg = context.getNext();
-			// Look for the parameter
-			def = argDefs.get(arg);
-			if (def != null) {
-				if (def.hasParameter()) {
-					val = context.getNext();
-					if (val == null) {
-						// Missing argument
-						throw new MissingArgumentParameterException(arg, "Missing argument.");
-					}
-				} else {
-					val = null;
-				}
-			} else {
-				// Unnamed value
+			if (allUnnamed) {
+				// Unnamed values only
 				def = argDefs.get(null);
 				if (def == null) {
 					// Unnamed argument is not acceptable
 					throw new UnknownArgumentException(arg, "Unknown argumented because unnamed argument is not defined.");					
 				}
 				val = arg;
+				
+				// Validate uniqueness
+				context.validateUnique(def);	
+	
+				// Call the method!
+				def.invokeMethod(instance, val);				
+			} else {
+				if (arg.equals("--")) {
+					allUnnamed = true;
+				} else {
+					// Look for the parameter
+					def = argDefs.get(arg);
+					if (def != null) {
+						if (def.hasParameter()) {
+							val = context.getNext();
+							if (val == null) {
+								// Missing argument
+								throw new MissingArgumentParameterException(arg, "Missing argument.");
+							}
+						} else {
+							val = null;
+						}
+					} else {
+						// Unnamed value
+						def = argDefs.get(null);
+						if (def == null) {
+							// Unnamed argument is not acceptable
+							throw new UnknownArgumentException(arg, "Unknown argumented because unnamed argument is not defined.");					
+						}
+						val = arg;
+					}
+					
+					// Validate uniqueness
+					context.validateUnique(def);	
+		
+					// Call the method!
+					def.invokeMethod(instance, val);
+				}
 			}
-			
-			// Validate uniqueness
-			context.validateUnique(def);	
-
-			// Call the method!
-			def.invokeMethod(instance, val);
 		}
 	}
 	

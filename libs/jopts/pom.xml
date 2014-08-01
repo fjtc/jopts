@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.brokenbits</groupId>
 	<artifactId>jopts</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>JOpts</name>
 	<description>Command line parser based on annotated POJOs.</description>
 	<properties>

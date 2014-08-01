@@ -176,6 +176,42 @@ public class ArgumentParserTest {
 		}			
 	}
 	
+	private static class Terminator {
+
+		private ArrayList<String> list = new ArrayList<String>();
+		
+		private int arg1;
+		
+		private String arg2;
+		
+		@Argument()
+		public void setDefault(String s){
+			list.add(s);
+		}
+		
+		@Argument(name="arg1")
+		public void setArg1() {
+			arg1++;
+		}
+		
+		@Argument(name="arg2")
+		public void setArg2(String s) {
+			arg2 = s;
+		}
+		
+		
+		public List<String> getList(){
+			return list; 
+		}
+		
+		public int getArg1(){
+			return arg1;
+		}
+		
+		public String getArg2(){
+			return arg2;
+		}
+	}	
 	
 	@Test
 	public void testArgumentParser() throws Exception {
@@ -450,4 +486,49 @@ public class ArgumentParserTest {
 		assertEquals("zero description.", h.getDescription());
 		assertNull(h.getConflicts());
 	}	
+	
+	@Test
+	public void testTerminator() throws Exception {
+		ArgumentParser<Terminator> p;
+		Terminator t;
+		
+		p = new ArgumentParser<ArgumentParserTest.Terminator>(Terminator.class);
+		
+		t = new Terminator();
+		p.process(new String[]{"arg1", "--"}, t); 
+		assertEquals(1, t.getArg1());
+		assertEquals(0, t.getList().size());
+		assertNull(t.getArg2());
+		
+		t = new Terminator();
+		p.process(new String[]{"arg1", "--", "arg1"}, t); 
+		assertEquals(1, t.getArg1());
+		assertEquals(1, t.getList().size());
+		assertEquals("arg1", t.getList().get(0));
+		assertNull(t.getArg2());
+		
+		t = new Terminator();
+		p.process(new String[]{"arg1", "arg2", "a", "--", "arg1"}, t); 
+		assertEquals(1, t.getArg1());
+		assertEquals(1, t.getList().size());
+		assertEquals("arg1", t.getList().get(0));
+		assertEquals("a", t.getArg2());
+		
+		t = new Terminator();
+		p.process(new String[]{"arg1", "arg2", "--", "--", "arg1"}, t); 
+		assertEquals(1, t.getArg1());
+		assertEquals(1, t.getList().size());
+		assertEquals("arg1", t.getList().get(0));
+		assertEquals("--", t.getArg2());
+		
+		
+		t = new Terminator();
+		p.process(new String[]{"arg1", "arg2", "--", "--", "arg1", "arg2", "--"}, t); 
+		assertEquals(1, t.getArg1());
+		assertEquals(3, t.getList().size());
+		assertEquals("arg1", t.getList().get(0));
+		assertEquals("arg2", t.getList().get(1));
+		assertEquals("--", t.getList().get(2));
+		assertEquals("--", t.getArg2());		
+	}
 }
