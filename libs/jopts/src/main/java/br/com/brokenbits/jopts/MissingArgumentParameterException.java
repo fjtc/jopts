@@ -48,10 +48,4 @@ public class MissingArgumentParameterException extends ArgumentParserException {
 			Throwable cause) {
 		super(name, message, cause);
 	}
-
-	public MissingArgumentParameterException(String name, String message,
-			Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(name, message, cause, enableSuppression, writableStackTrace);
-	}
 }

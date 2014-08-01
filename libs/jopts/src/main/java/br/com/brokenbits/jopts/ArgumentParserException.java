@@ -33,41 +33,62 @@ package br.com.brokenbits.jopts;
 public class ArgumentParserException extends Exception {
 	
 	/**
-	 * 
+	 * Serialization version number.
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * The name of the argument.
+	 */
 	private String name;
 
+	/**
+	 * Creates a new instance of this class.
+	 * 
+	 * @param name The name of the argument.
+	 */
 	public ArgumentParserException(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Creates a new instance of this class.
+	 * 
+	 * @param name The name of the argument.
+	 * @param message The associated message.
+	 */
 	public ArgumentParserException(String name, String message) {
 		super(message);
 		this.name = name;
 	}
 
+	/**
+	 * Creates a new instance of this class.
+	 * 
+	 * @param name The name of the argument.
+	 * @param cause The cause of this exception.
+	 */
 	public ArgumentParserException(String name, Throwable cause) {
 		super(cause);
 		this.name = name;
 	}
 
+	/**
+	 * Creates a new instance of this class.
+	 * 
+	 * @param name The name of the argument.
+	 * @param message The associated message.
+	 * @param cause The cause of this exception.
+	 */
 	public ArgumentParserException(String name, String message, Throwable cause) {
 		super(message, cause);
 		this.name = name;
 	}
-
-	public ArgumentParserException(String name, String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		this.name = name;
-	}
 	
 	/**
-	 * Returns the name of the affected parameter.
+	 * Returns the name of the affected argument.
 	 *  
-	 * @return The name of the parameter or null if it is not available.
+	 * @return The name of the argument or null if it is not available.
 	 */
 	public String getName() {
 		return name;

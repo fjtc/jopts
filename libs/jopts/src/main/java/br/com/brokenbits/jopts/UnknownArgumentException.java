@@ -25,6 +25,12 @@
  */
 package br.com.brokenbits.jopts;
 
+/**
+ * This exception is used to indicate that an unknown argument was found in the
+ * command line.
+ *  
+ * @author FJTC
+ */
 public class UnknownArgumentException extends ArgumentParserException {
 
 	/**
@@ -47,11 +53,5 @@ public class UnknownArgumentException extends ArgumentParserException {
 	public UnknownArgumentException(String name, String message,
 			Throwable cause) {
 		super(name, message, cause);
-	}
-
-	public UnknownArgumentException(String name, String message,
-			Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(name, message, cause, enableSuppression, writableStackTrace);
 	}
 }

@@ -49,13 +49,6 @@ public class DuplicatedArgumentException extends ArgumentParserException {
 		super(name, cause);
 		this.duplicated = duplicated;
 	}
-
-	public DuplicatedArgumentException(String name, String duplicated,
-			Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(name, null, cause, enableSuppression, writableStackTrace);
-		this.duplicated = duplicated;
-	}
 	
 	public String getDuplicated(){
 		return duplicated;

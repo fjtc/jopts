@@ -53,10 +53,4 @@ public class InvalidParameterTypeException extends ArgumentParserException {
 			Throwable cause) {
 		super(name, message, cause);
 	}
-
-	public InvalidParameterTypeException(String name, String message,
-			Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(name, message, cause, enableSuppression, writableStackTrace);
-	}
 }

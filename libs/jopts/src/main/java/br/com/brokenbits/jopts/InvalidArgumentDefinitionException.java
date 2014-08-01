@@ -54,9 +54,4 @@ public class InvalidArgumentDefinitionException extends ArgumentParserException 
 		super(name, message, cause);
 	}
 
-	public InvalidArgumentDefinitionException(String name, String message,
-			Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(name, message, cause, enableSuppression, writableStackTrace);
-	}
 }
