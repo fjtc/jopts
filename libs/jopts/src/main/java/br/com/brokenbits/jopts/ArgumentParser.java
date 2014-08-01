@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -194,7 +195,6 @@ public class ArgumentParser<T> {
 	 */
 	public List<ArgumentHelp> generateHelp(ResourceBundle res) {
 		ArrayList<ArgumentHelp> list = new ArrayList<ArgumentHelp>();
-		String desc;
 
 		for (Map.Entry<String, ArgumentDefinition> e: this.argDefs.entrySet()) {
 			ArgumentDefinition d = e.getValue();
@@ -207,16 +207,7 @@ public class ArgumentParser<T> {
 			h.setType(d.getType());
 
 			// Set the description
-			desc = d.getDescription();
-			if (res != null) {
-				if (d.getResourceName() != null) {
-					String s = res.getString(d.getResourceName());
-					if (s == null) {
-						desc = d.getResourceName();
-					}
-				}
-			}
-			h.setDescription(desc);
+			h.setDescription(getResourceString(res, d));
 			
 			// Set the conflict list
 			if (d.isUnique()) {
@@ -225,11 +216,26 @@ public class ArgumentParser<T> {
 					h.setConflicts(c);
 				}			
 			}
+			
+			list.add(h);
 		}
 		
 		// Sort this list
 		Collections.sort(list);
 		
 		return list;		
+	}
+	
+	private String getResourceString(ResourceBundle res, ArgumentDefinition d){
+		
+		if (res == null) {
+			return d.getDescription();
+		} else {
+			try {
+				return res.getString(d.getResourceName());
+			} catch (MissingResourceException e) {
+				return d.getDescription();
+			}
+		}
 	}
 }

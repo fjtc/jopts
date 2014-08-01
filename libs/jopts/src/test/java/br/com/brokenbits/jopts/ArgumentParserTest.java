@@ -29,6 +29,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.junit.Test;
 
@@ -150,13 +151,29 @@ public class ArgumentParserTest {
 	private static class Help {
 
 		
-		@Argument(description="setDefault", resourceName="setDefault")
-		public void setDefault(){
+		@Argument(description="unnamed description.", resourceName="unnamed")
+		public void setDefault(String s){
 		}
 		
-		@Argument(description="setUnique", resourceName="setUnique")
-		public void setUnique(int i){
+		@Argument(name="unique", uniqueKey="unique", description="unique description.", resourceName="unique")
+		public void setUnique(long l) {
+		}
+		
+		@Argument(name="arg", description="arg description.", resourceName="arg")
+		public void setArg(Long l) {
 		}		
+
+		@Argument(name="command1", uniqueKey="command", description="command1 description.", resourceName="command1")
+		public void setCommand1(double d){
+		}
+		
+		@Argument(name="command2", uniqueKey="command", description="command2 description.", resourceName="command2")
+		public void setCommand2(Double d){
+		}
+		
+		@Argument(name="zero", description="zero description.", resourceName="zero")
+		public void setZero(){
+		}			
 	}
 	
 	
@@ -307,5 +324,130 @@ public class ArgumentParserTest {
 		} catch (DuplicatedArgumentException e) {
 			assertNull(e.getName());
 		}
+	}	
+	
+	@Test
+	public void testHelp() throws Exception {
+		ArgumentParser<Help> parser;
+		List<ArgumentHelp> l;
+		ArgumentHelp h;
+		
+		parser = new ArgumentParser<Help>(Help.class);
+		l = parser.generateHelp(null);
+		
+		assertEquals(6, l.size());
+		
+		// unnamed
+		h = l.get(0);
+		assertNull(h.getName());
+		assertEquals(ArgumentParameterType.STRING, h.getType());
+		assertEquals("unnamed description.", h.getDescription());
+		assertNull(h.getConflicts());
+		
+		// arg
+		h = l.get(1);
+		assertEquals("arg", h.getName());
+		assertEquals(ArgumentParameterType.LONG, h.getType());
+		assertEquals("arg description.", h.getDescription());
+		assertNull(h.getConflicts());
+		
+		// command1
+		h = l.get(2);
+		assertEquals("command1", h.getName());
+		assertEquals(ArgumentParameterType.DOUBLE, h.getType());
+		assertEquals("command1 description.", h.getDescription());
+		assertNotNull(h.getConflicts());
+		assertEquals(2, h.getConflicts().size());
+		assertTrue(h.getConflicts().contains("command1"));
+		assertTrue(h.getConflicts().contains("command2"));
+		
+		// command2
+		h = l.get(3);
+		assertEquals("command2", h.getName());
+		assertEquals(ArgumentParameterType.DOUBLE, h.getType());
+		assertEquals("command2 description.", h.getDescription());
+		assertNotNull(h.getConflicts());
+		assertEquals(2, h.getConflicts().size());
+		assertTrue(h.getConflicts().contains("command1"));
+		assertTrue(h.getConflicts().contains("command2"));
+		
+		// unique
+		h = l.get(4);
+		assertEquals("unique", h.getName());
+		assertEquals(ArgumentParameterType.LONG, h.getType());
+		assertEquals("unique description.", h.getDescription());
+		assertNotNull(h.getConflicts());
+		assertEquals(1, h.getConflicts().size());
+		assertTrue(h.getConflicts().contains("unique"));
+		
+		// arg
+		h = l.get(5);
+		assertEquals("zero", h.getName());
+		assertEquals(ArgumentParameterType.NONE, h.getType());
+		assertEquals("zero description.", h.getDescription());
+		assertNull(h.getConflicts());
+	}
+	
+	@Test
+	public void testHelpResource() throws Exception {
+		ArgumentParser<Help> parser;
+		List<ArgumentHelp> l;
+		ArgumentHelp h;
+		ResourceBundle res = ResourceBundle.getBundle("br.com.brokenbits.jopts.ArgumentParserTest");
+		
+		parser = new ArgumentParser<Help>(Help.class);
+		l = parser.generateHelp(res);
+		
+		assertEquals(6, l.size());
+		
+		// unnamed
+		h = l.get(0);
+		assertNull(h.getName());
+		assertEquals(ArgumentParameterType.STRING, h.getType());
+		assertEquals("unnamed resource", h.getDescription());
+		assertNull(h.getConflicts());
+		
+		// arg
+		h = l.get(1);
+		assertEquals("arg", h.getName());
+		assertEquals(ArgumentParameterType.LONG, h.getType());
+		assertEquals("arg description.", h.getDescription());
+		assertNull(h.getConflicts());
+		
+		// command1
+		h = l.get(2);
+		assertEquals("command1", h.getName());
+		assertEquals(ArgumentParameterType.DOUBLE, h.getType());
+		assertEquals("command1 resource", h.getDescription());
+		assertNotNull(h.getConflicts());
+		assertEquals(2, h.getConflicts().size());
+		assertTrue(h.getConflicts().contains("command1"));
+		assertTrue(h.getConflicts().contains("command2"));
+		
+		// command2
+		h = l.get(3);
+		assertEquals("command2", h.getName());
+		assertEquals(ArgumentParameterType.DOUBLE, h.getType());
+		assertEquals("command2 resource", h.getDescription());
+		assertNotNull(h.getConflicts());
+		assertEquals(2, h.getConflicts().size());
+		assertTrue(h.getConflicts().contains("command1"));
+		assertTrue(h.getConflicts().contains("command2"));
+		
+		// unique
+		h = l.get(4);
+		assertEquals("unique", h.getName());
+		assertEquals(ArgumentParameterType.LONG, h.getType());
+		assertEquals("unique resource", h.getDescription());
+		assertNotNull(h.getConflicts());
+		assertEquals(1, h.getConflicts().size());
+		assertTrue(h.getConflicts().contains("unique"));
+		
+		// arg
+		h = l.get(5);
+		assertEquals("zero", h.getName());
+		assertEquals(ArgumentParameterType.NONE, h.getType());
+		assertEquals("zero resource", h.getDescription());
+		assertNull(h.getConflicts());
 	}	
 }
