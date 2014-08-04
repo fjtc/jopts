@@ -50,7 +50,6 @@ public class ArgumentParserContextTest {
 	
 	private ArgumentDefinition getInstance(String name) throws NoSuchMethodException {
 		Method m;
-		Argument a;
 				
 		m = Sample.class.getMethod(name);
 		

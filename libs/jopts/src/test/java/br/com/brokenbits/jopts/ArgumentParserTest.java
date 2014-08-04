@@ -247,7 +247,7 @@ public class ArgumentParserTest {
 		parser = new ArgumentParser<Sample>(Sample.class);
 		assertNotNull(parser);
 		
-		parser.process(new String[]{"bool", "string", "s", "string2", "s2", "long", "12345", "double", "1.23"}, s);
+		parser.parse(new String[]{"bool", "string", "s", "string2", "s2", "long", "12345", "double", "1.23"}, s);
 		assertNotNull(s.getBool());
 		assertTrue(s.getBool());
 		assertEquals("s", s.getString());
@@ -263,7 +263,7 @@ public class ArgumentParserTest {
 		parser = new ArgumentParser<Sample>(Sample.class);
 		
 		try {
-			parser.process(new String[]{"qwerty"}, s);
+			parser.parse(new String[]{"qwerty"}, s);
 			fail();
 		} catch (UnknownArgumentException e) {
 			assertEquals("qwerty", e.getName());
@@ -278,8 +278,8 @@ public class ArgumentParserTest {
 		
 		parser = new ArgumentParser<Sample>(Sample.class);
 		
-		parser.process(new String[]{"string2", "a"}, s1);
-		parser.process(new String[]{"str2", "a"}, s2);
+		parser.parse(new String[]{"string2", "a"}, s1);
+		parser.parse(new String[]{"str2", "a"}, s2);
 		assertEquals(s1.getString2(), s2.getString2());
 	}	
 	
@@ -293,7 +293,7 @@ public class ArgumentParserTest {
 		assertNotNull(parser);
 		
 		try {
-			parser.process(new String[]{"string"}, s);
+			parser.parse(new String[]{"string"}, s);
 			fail();
 		} catch (MissingArgumentParameterException e) {
 			assertEquals("string", e.getName());
@@ -309,7 +309,7 @@ public class ArgumentParserTest {
 		assertNotNull(parser);
 		
 		try {
-			parser.process(new String[]{"long", "a"}, s);
+			parser.parse(new String[]{"long", "a"}, s);
 			fail();
 		} catch (InvalidParameterTypeException e) {
 			assertEquals("long", e.getName());
@@ -325,7 +325,7 @@ public class ArgumentParserTest {
 		assertNotNull(parser);
 		
 		try {
-			parser.process(new String[]{"double", "a"}, s);
+			parser.parse(new String[]{"double", "a"}, s);
 			fail();
 		} catch (InvalidParameterTypeException e) {
 			assertEquals("double", e.getName());
@@ -339,7 +339,7 @@ public class ArgumentParserTest {
 		Unnamed s = new Unnamed();
 		
 		parser = new ArgumentParser<Unnamed>(Unnamed.class);
-		parser.process(new String[]{"1", "2", "3"}, s);
+		parser.parse(new String[]{"1", "2", "3"}, s);
 		assertNotNull(parser);
 		assertEquals(3, s.getList().size());
 		assertEquals("1", s.getList().get(0));
@@ -355,7 +355,7 @@ public class ArgumentParserTest {
 		parser = new ArgumentParser<UnnamedUnique>(UnnamedUnique.class);
 		assertNotNull(parser);
 		try {
-			parser.process(new String[]{"double", "a"}, s);
+			parser.parse(new String[]{"double", "a"}, s);
 			fail();
 		} catch (DuplicatedArgumentException e) {
 			assertNull(e.getName());
@@ -495,27 +495,27 @@ public class ArgumentParserTest {
 		p = new ArgumentParser<ArgumentParserTest.Terminator>(Terminator.class);
 		
 		t = new Terminator();
-		p.process(new String[]{"arg1", "--"}, t); 
+		p.parse(new String[]{"arg1", "--"}, t); 
 		assertEquals(1, t.getArg1());
 		assertEquals(0, t.getList().size());
 		assertNull(t.getArg2());
 		
 		t = new Terminator();
-		p.process(new String[]{"arg1", "--", "arg1"}, t); 
+		p.parse(new String[]{"arg1", "--", "arg1"}, t); 
 		assertEquals(1, t.getArg1());
 		assertEquals(1, t.getList().size());
 		assertEquals("arg1", t.getList().get(0));
 		assertNull(t.getArg2());
 		
 		t = new Terminator();
-		p.process(new String[]{"arg1", "arg2", "a", "--", "arg1"}, t); 
+		p.parse(new String[]{"arg1", "arg2", "a", "--", "arg1"}, t); 
 		assertEquals(1, t.getArg1());
 		assertEquals(1, t.getList().size());
 		assertEquals("arg1", t.getList().get(0));
 		assertEquals("a", t.getArg2());
 		
 		t = new Terminator();
-		p.process(new String[]{"arg1", "arg2", "--", "--", "arg1"}, t); 
+		p.parse(new String[]{"arg1", "arg2", "--", "--", "arg1"}, t); 
 		assertEquals(1, t.getArg1());
 		assertEquals(1, t.getList().size());
 		assertEquals("arg1", t.getList().get(0));
@@ -523,7 +523,7 @@ public class ArgumentParserTest {
 		
 		
 		t = new Terminator();
-		p.process(new String[]{"arg1", "arg2", "--", "--", "arg1", "arg2", "--"}, t); 
+		p.parse(new String[]{"arg1", "arg2", "--", "--", "arg1", "arg2", "--"}, t); 
 		assertEquals(1, t.getArg1());
 		assertEquals(3, t.getList().size());
 		assertEquals("arg1", t.getList().get(0));
