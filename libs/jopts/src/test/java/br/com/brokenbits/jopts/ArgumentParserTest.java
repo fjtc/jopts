@@ -56,7 +56,7 @@ public class ArgumentParserTest {
 			this.string = string;
 		}
 
-		@Arguments(arguments={
+		@Arguments({
 				@Argument(name="string2"), 
 				@Argument(name="str2")})
 		public void setString2(String string) {

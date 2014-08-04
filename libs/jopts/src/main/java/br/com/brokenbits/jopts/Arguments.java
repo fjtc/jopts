@@ -32,7 +32,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation allows the use of multiple argument definitions for a single method (aliases).
+ * This annotation allows the use assign multiple argument definitions to a single method.
  * 
  * @author FJTC
  */
@@ -44,5 +44,5 @@ public @interface Arguments {
 	/**
 	 * The list of argument definitions.
 	 */
-	Argument[] arguments();
+	Argument[] value();
 }

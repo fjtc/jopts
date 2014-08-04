@@ -68,10 +68,10 @@ public class ArgumentParser<T> {
 			} else {
 				Arguments args = m.getAnnotation(Arguments.class);
 				if (args != null) {
-					if (args.arguments() == null) {
+					if (args.value() == null) {
 						throw new InvalidArgumentDefinitionException("The annotation arguments must contain at least one  argument.");
 					} else {
-						for (Argument arg: args.arguments()) {
+						for (Argument arg: args.value()) {
 							processMethod(m, arg);			
 						}
 					}
