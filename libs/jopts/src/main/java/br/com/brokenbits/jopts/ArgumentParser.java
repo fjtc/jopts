@@ -119,9 +119,11 @@ public class ArgumentParser<T> {
 	 * @param instance The instance to be filled.
 	 * @throws IllegalArgumentException If one or more parameters are not correct.
 	 * @throws ArgumentParserException If the arguments could not be parsed.
+	 * @deprecated Use parse(String[],T) instead of this method.
 	 */
+	@Deprecated
 	public void process(String args[], T instance) throws IllegalArgumentException, ArgumentParserException {
-		process(args, 0, args.length, instance);
+		parse(args, instance);
 	}
 	
 	/**
@@ -133,8 +135,38 @@ public class ArgumentParser<T> {
 	 * @param instance The instance to be filled.
 	 * @throws IllegalArgumentException If one or more parameters are not correct.
 	 * @throws ArgumentParserException If the arguments could not be parsed.
+	 * @deprecated Use parse(String[],int,int,T) instead of this method.
 	 */
+	@Deprecated	
 	public void process(String args[], int offs, int count, T instance) throws IllegalArgumentException, ArgumentParserException {
+		parse(args, offs, count, instance);
+	}
+	
+	/**
+	 * Process the argument line and fills the DAO instance with the 
+	 * 
+	 * @param args The list of arguments.
+	 * @param instance The instance to be filled.
+	 * @throws IllegalArgumentException If one or more parameters are not correct.
+	 * @throws ArgumentParserException If the arguments could not be parsed.
+	 * @since 0.0.3-SNAPSHOT
+	 */
+	public void parse(String args[], T instance) throws IllegalArgumentException, ArgumentParserException {
+		parse(args, 0, args.length, instance);
+	}		
+	
+	/**
+	 * Process the argument line and fills the DAO instance with the 
+	 * 
+	 * @param args The list of arguments.
+	 * @param offs The first argument to be parsed.
+	 * @param count The number of arguments to be parsed.
+	 * @param instance The instance to be filled.
+	 * @throws IllegalArgumentException If one or more parameters are not correct.
+	 * @throws ArgumentParserException If the arguments could not be parsed.
+	 * @since 0.0.3-SNAPSHOT
+	 */
+	public void parse(String args[], int offs, int count, T instance) throws IllegalArgumentException, ArgumentParserException {
 		String arg;
 		String val;
 		ArgumentDefinition def;
