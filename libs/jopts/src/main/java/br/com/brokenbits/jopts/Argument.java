@@ -9,6 +9,9 @@ import java.lang.annotation.Target;
 /**
  * This annotation is used to indicate that a method is an argument handler method. 
  * 
+ * <p>This annotation can be used for non static methods with zero or one parameter
+ * which type can be long, Long, double, Double and String.
+ * 
  * @author fjtc
  * @since 2014.07.22
  */
